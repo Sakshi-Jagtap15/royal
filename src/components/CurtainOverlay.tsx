@@ -57,21 +57,25 @@ const CurtainOverlay = ({ onOpen }: { onOpen: () => void }) => {
         transition={{ duration: 2, ease: [0.4, 0, 0.2, 1] }}
       />
 
-      {/* BUTTON */}
-      {!isOpening && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-auto">
-          <button
-            onClick={handleOpen}
-            className="px-10 py-4 border-2 border-yellow-500 text-yellow-500"
-          >
-            ✦ Open Invitation ✦
-          </button>
-        </div>
-      )}
 
-    </motion.div>
-  </AnimatePresence>
-);
+          {/* Open Button */}
+          {!isOpening && (
+            <motion.button
+              onClick={handleOpen}
+              className="relative z-20 px-10 py-4 font-display text-lg tracking-[0.2em] uppercase gold-shine text-accent-foreground rounded-sm border-2 border-royal-gold-light cursor-pointer"
+              style={{ color: "hsl(345, 80%, 10%)" }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 30px hsla(43, 65%, 52%, 0.5)" }}
+              whileTap={{ scale: 0.98 }}
+            >
+              ✦ Open Invitation ✦
+            </motion.button>
+          )}
+        </motion.div>
+    </AnimatePresence>
+  );
 };
 
 export default CurtainOverlay;
