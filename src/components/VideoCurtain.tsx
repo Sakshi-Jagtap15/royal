@@ -32,7 +32,7 @@ export default function VideoCurtain({ onFinish }: Props) {
         playsInline
         className="w-full h-full object-cover"
       >
-        <source src="/src/assets/curtains.mp4" type="video/mp4" />
+        <source src="/curtain-open.mp4" type="video/mp4" />
       </video>
     </div>
   );
