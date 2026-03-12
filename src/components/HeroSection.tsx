@@ -27,7 +27,7 @@ const HeroSection = ({
   })();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-visible">
+    <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16">
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -60,7 +60,7 @@ const HeroSection = ({
           animate={{ opacity: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.2 }}
         >
-          <h1 className="font-script text-5xl md:text-8xl gold-text-gradient leading-tight">
+          <h1 className="font-script text-5xl md:text-8xl gold-text-gradient leading-[1.3]">
             {brideName}
           </h1>
         </motion.div>
