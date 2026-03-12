@@ -30,33 +30,77 @@ const CurtainOverlay = ({ onOpen }: { onOpen: () => void }) => {
   };
 
   return (
-  <AnimatePresence>
-    <motion.div
-      className="fixed inset-0 z-50 pointer-events-none"
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.6 }}
-    >
+    <AnimatePresence>
+      {!isOpening || particles.length > 0 ? (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, delay: 2 }}
+        >
+          {/* Left Curtain */}
+          <motion.div
+            className="absolute top-0 left-0 w-1/2 h-full overflow-hidden"
+            animate={isOpening ? { x: "-100%" } : { x: 0 }}
+            transition={{ duration: 2, ease: [0.4, 0, 0.2, 1] }}
+          >
+            <div
+              className="w-full h-full bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${curtainTexture})`,
+                boxShadow: "inset -30px 0 60px rgba(0,0,0,0.5)",
+              }}
+            />
+            <div className="absolute top-0 right-0 w-8 h-full gradient-gold opacity-40" />
+          </motion.div>
 
-      {/* LEFT CURTAIN */}
-      <motion.div
-        className="absolute top-0 left-0 w-1/2 h-full"
-        style={{ backgroundImage: `url(${curtainTexture})`, backgroundSize: "cover" }}
-        animate={isOpening ? { x: "-100%" } : { x: 0 }}
-        transition={{ duration: 2, ease: [0.4, 0, 0.2, 1] }}
-      />
+          {/* Right Curtain */}
+          <motion.div
+            className="absolute top-0 right-0 w-1/2 h-full overflow-hidden"
+            animate={isOpening ? { x: "100%" } : { x: 0 }}
+            transition={{ duration: 2, ease: [0.4, 0, 0.2, 1] }}
+          >
+            <div
+              className="w-full h-full bg-cover bg-center"
+              style={{
+                backgroundImage: `url(${curtainTexture})`,
+                transform: "scaleX(-1)",
+                boxShadow: "inset 30px 0 60px rgba(0,0,0,0.5)",
+              }}
+            />
+            <div className="absolute top-0 left-0 w-8 h-full gradient-gold opacity-40" />
+          </motion.div>
 
-      {/* RIGHT CURTAIN */}
-      <motion.div
-        className="absolute top-0 right-0 w-1/2 h-full"
-        style={{
-          backgroundImage: `url(${curtainTexture})`,
-          backgroundSize: "cover",
-          transform: "scaleX(-1)"
-        }}
-        animate={isOpening ? { x: "100%" } : { x: 0 }}
-        transition={{ duration: 2, ease: [0.4, 0, 0.2, 1] }}
-      />
+          {/* Gold tassel/valance at top */}
+          <motion.div
+            className="absolute top-0 left-0 w-full h-16 gradient-gold opacity-60 z-10"
+            animate={isOpening ? { opacity: 0, y: -20 } : {}}
+            transition={{ duration: 1.5 }}
+          />
 
+          {/* Sparkle particles */}
+          {isOpening && particles.map((p) => (
+            <motion.div
+              key={p.id}
+              className="absolute rounded-full"
+              style={{
+                left: `${p.x}%`,
+                top: `${p.y}%`,
+                width: p.size,
+                height: p.size,
+                background: "radial-gradient(circle, hsl(43, 80%, 75%), hsl(43, 65%, 52%), transparent)",
+              }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{
+                opacity: [0, 1, 0],
+                scale: [0, 1.5, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                delay: p.delay,
+                ease: "easeOut",
+              }}
+            />
+          ))}
 
           {/* Open Button */}
           {!isOpening && (
@@ -74,6 +118,7 @@ const CurtainOverlay = ({ onOpen }: { onOpen: () => void }) => {
             </motion.button>
           )}
         </motion.div>
+      ) : null}
     </AnimatePresence>
   );
 };
