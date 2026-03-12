@@ -7,6 +7,26 @@ import Index from "./pages/Index";
 import InvitePage from "./pages/InvitePage";
 import NotFound from "./pages/NotFound";
 
+import { useState } from "react";
+import CurtainOverlay from "./components/CurtainOverlay";
+import HeroSection from "./components/HeroSection";
+
+function Home() {
+  const [opened, setOpened] = useState(false);
+
+  return (
+    <>
+      {/* Hero is always rendered */}
+      <HeroSection />
+
+      {/* Curtain sits on top */}
+      {!opened && (
+        <CurtainOverlay onOpen={() => setOpened(true)} />
+      )}
+    </>
+  );
+}
+
 const queryClient = new QueryClient();
 
 const App = () => (

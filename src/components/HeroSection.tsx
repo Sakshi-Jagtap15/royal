@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import palaceBg from "@/assets/palace-bg.jpg";
 import { format, parseISO } from "date-fns";
 
+
 interface HeroSectionProps {
   brideName?: string;
   groomName?: string;
@@ -26,7 +27,7 @@ const HeroSection = ({
   })();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden transition-all duration-700">
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -55,10 +56,9 @@ const HeroSection = ({
         </motion.p>
 
         <motion.div
-          className="mb-4"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 1 }}
+          initial={{ opacity: 0.7, filter: "blur(4px)" }}
+          animate={{ opacity: 1, filter: "blur(0px)" }}
+          transition={{ duration: 1.2 }}
         >
           <h1 className="font-script text-5xl md:text-8xl gold-text-gradient leading-tight">
             {brideName}
