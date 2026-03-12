@@ -56,7 +56,7 @@ export type Database = {
       rsvps: {
         Row: {
           id: string
-          invitation_slug: string | null
+          invitation_slug: string 
           guest_name: string | null
           guest_email: string | null
           guest_count: number | null
@@ -65,7 +65,7 @@ export type Database = {
         }
         Insert: {
           id?: string
-          invitation_slug?: string | null
+          invitation_slug?: string 
           guest_name?: string | null
           guest_email?: string | null
           guest_count?: number | null

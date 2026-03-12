@@ -2,11 +2,13 @@ import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useParams } from "react-router-dom"
 
 const RSVPSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [form, setForm] = useState({ name: "", email: "", guests: "1", attending: "yes" });
+  const { slug } = useParams()
 
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
@@ -19,7 +21,7 @@ const RSVPSection = () => {
         guest_email: form.email,
         guest_count: Number(form.guests),
         attending: form.attending === "yes",
-        invitation_slug: "test-wedding" // replace later with dynamic slug
+        invitation_slug: slug // replace later with dynamic slug
       }
     ]);
 
