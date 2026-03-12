@@ -31,9 +31,9 @@ const InvitePage = () => {
 
       const { data, error } = await supabase
         .from("invitations")
-        .select("bride_name, groom_name, wedding_date, venue, story, image_url")
+        .select("*")
         .eq("slug", slug)
-        .maybeSingle();
+        .single();
 
       if (error || !data) {
         setNotFound(true);
