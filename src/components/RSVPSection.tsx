@@ -1,19 +1,42 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const RSVPSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [form, setForm] = useState({ name: "", email: "", guests: "1", attending: "yes" });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success("Thank you! Your RSVP has been received.", {
-      description: `We look forward to celebrating with you, ${form.name}!`,
-    });
-    setForm({ name: "", email: "", guests: "1", attending: "yes" });
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const { error } = await supabase
+    .from("rsvps")
+    .insert([
+      {
+        guest_name: form.name,
+        guest_email: form.email,
+        guest_count: Number(form.guests),
+        attending: form.attending === "yes",
+        invitation_slug: "test-wedding" // replace later with dynamic slug
+      }
+    ]);
+
+  if (error) {
+    toast.error("Something went wrong. Please try again.");
+    console.error(error);
+    return;
+  }
+
+  toast.success("Thank you! Your RSVP has been received.", {
+    description: `We look forward to celebrating with you, ${form.name}!`,
+  });
+
+  setForm({ name: "", email: "", guests: "1", attending: "yes" });
+};
+
+  
 
   return (
     <section ref={ref} className="py-24 bg-maroon relative overflow-hidden">
