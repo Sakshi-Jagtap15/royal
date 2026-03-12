@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import type { InvitationData } from "@/types/invitation";
-import CurtainOverlay from "@/components/CurtainOverlay";
 import HeroSection from "@/components/HeroSection";
 import SaveTheDate from "@/components/SaveTheDate";
 import Countdown from "@/components/Countdown";
@@ -13,14 +11,15 @@ import BackgroundMusic from "@/components/BackgroundMusic";
 import RSVPSection from "@/components/RSVPSection";
 import WeddingFooter from "@/components/WeddingFooter";
 import InvitationNotFound from "./InvitationNotFound";
-import VideoCurtain from "@/components/VideoCurtain";
+import InvitationCard from "@/components/InvitationCard";
+
 
 const InvitePage = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [curtainOpen, setCurtainOpen] = useState(false);
   const [invitation, setInvitation] = useState<InvitationData | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [cardOpened, setCardOpened] = useState(false);
 
   useEffect(() => {
   const fetchInvitation = async () => {
@@ -62,6 +61,7 @@ const InvitePage = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-ivory flex items-center justify-center">
+        
         <div className="text-center">
           <div className="royal-divider w-24 mx-auto mb-4" />
           <p className="font-elegant text-lg text-maroon italic animate-pulse">
@@ -79,28 +79,32 @@ const InvitePage = () => {
   return (
   <div className="min-h-screen bg-ivory overflow-hidden">
 
-    <HeroSection
-      brideName={invitation.bride_name}
-      groomName={invitation.groom_name}
-      weddingDate={invitation.wedding_date}
-      venue={invitation.venue}
-      story={invitation.story}
-    />
+    {!cardOpened && (
+      <InvitationCard onOpen={() => setCardOpened(true)} />
+    )}
 
-    
-
-    {curtainOpen && (
+    {cardOpened && (
       <>
+        <HeroSection
+          brideName={invitation.bride_name}
+          groomName={invitation.groom_name}
+          weddingDate={invitation.wedding_date}
+          venue={invitation.venue}
+          story={invitation.story}
+        />
+
         <SaveTheDate weddingDate={invitation.wedding_date} />
         <Countdown weddingDate={invitation.wedding_date} />
         <WeddingEvents />
         <Gallery />
         <RSVPSection />
+
         <WeddingFooter
           brideName={invitation.bride_name}
           groomName={invitation.groom_name}
           weddingDate={invitation.wedding_date}
         />
+
         <BackgroundMusic />
       </>
     )}
