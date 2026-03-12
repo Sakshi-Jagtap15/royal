@@ -11,7 +11,6 @@ import BackgroundMusic from "@/components/BackgroundMusic";
 import RSVPSection from "@/components/RSVPSection";
 import WeddingFooter from "@/components/WeddingFooter";
 import InvitationNotFound from "./InvitationNotFound";
-import InvitationCard from "@/components/InvitationCard";
 
 
 const InvitePage = () => {
@@ -19,7 +18,7 @@ const InvitePage = () => {
   const [invitation, setInvitation] = useState<InvitationData | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
-  const [cardOpened, setCardOpened] = useState(false);
+ 
 
   useEffect(() => {
   const fetchInvitation = async () => {
@@ -79,11 +78,6 @@ const InvitePage = () => {
   return (
   <div className="min-h-screen bg-ivory overflow-hidden">
 
-    {!cardOpened && (
-      <InvitationCard onOpen={() => setCardOpened(true)} />
-    )}
-
-    {cardOpened && (
       <>
         <HeroSection
           brideName={invitation.bride_name}
@@ -107,7 +101,7 @@ const InvitePage = () => {
 
         <BackgroundMusic />
       </>
-    )}
+    
 
   </div>
 );
