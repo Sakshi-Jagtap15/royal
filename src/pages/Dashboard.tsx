@@ -36,8 +36,18 @@ const Dashboard = () => {
     return <div className="p-10">Loading guest list...</div>
   }
 
-  const attending = guests.filter(g => g.attending)
-  const declined = guests.filter(g => !g.attending)
+  const attendingGuests = guests
+  .filter(g => g.attending)
+  .reduce((sum, g) => sum + (g.guest_count || 0), 0)
+
+const declinedGuests = guests
+  .filter(g => !g.attending)
+  .reduce((sum, g) => sum + (g.guest_count || 0), 0)
+
+const totalGuests = guests.reduce(
+  (sum, g) => sum + (g.guest_count || 0),
+  0
+)
 
   return (
     <div className="min-h-screen bg-ivory p-10">
@@ -48,17 +58,17 @@ const Dashboard = () => {
       <div className="grid grid-cols-3 gap-6 mb-10">
         <div className="p-6 bg-white shadow">
           <h2>Total Guests</h2>
-          <p className="text-2xl">{guests.length}</p>
+          <p className="text-2xl">{totalGuests}</p>
         </div>
 
         <div className="p-6 bg-white shadow">
           <h2>Attending</h2>
-          <p className="text-2xl">{attending.length}</p>
+          <p className="text-2xl">{attendingGuests}</p>
         </div>
 
         <div className="p-6 bg-white shadow">
           <h2>Declined</h2>
-          <p className="text-2xl">{declined.length}</p>
+          <p className="text-2xl">{declinedGuests}</p>
         </div>
       </div>
 
