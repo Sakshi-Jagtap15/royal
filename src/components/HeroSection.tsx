@@ -82,7 +82,7 @@ const HeroSection = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 1 }}
         >
-          <h1 className="font-script text-5xl md:text-8xl gold-text-gradient leading-tight">
+          <h1 className="font-display text-5xl md:text-8xl gold-text-gradient leading-tight">
             {groomName}
           </h1>
         </motion.div>
