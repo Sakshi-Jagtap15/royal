@@ -50,7 +50,7 @@
 
     --shadow-gold: 0 4px 30px hsla(43, 65%, 52%, 0.3);
     --shadow-elegant: 0 10px 40px hsla(345, 80%, 22%, 0.15);
-    --gradient-gold: linear-gradient(135deg, hsl(43, 70%, 70%), hsl(43, 65%, 52%), hsl(43, 60%, 38%));
+    --gradient-gold: linear-gradient(130deg, hsl(43, 70%, 70%), hsl(43, 65%, 52%), hsl(43, 60%, 38%));
     --gradient-maroon: linear-gradient(135deg, hsl(345, 80%, 22%), hsl(345, 60%, 15%));
     --gradient-curtain: linear-gradient(180deg, hsl(345, 80%, 12%), hsl(345, 80%, 22%), hsl(345, 60%, 15%));
 
