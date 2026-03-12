@@ -24,7 +24,9 @@ const CurtainOverlay = ({ onOpen }: { onOpen: () => void }) => {
     }));
     setParticles(newParticles);
     setIsOpening(true);
-    setTimeout(onOpen, 2000);
+    setTimeout(() => {
+        onOpen();
+      }, 2000);
   };
 
   return (
