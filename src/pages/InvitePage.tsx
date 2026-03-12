@@ -1,0 +1,98 @@
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
+import type { InvitationData } from "@/types/invitation";
+import CurtainOverlay from "@/components/CurtainOverlay";
+import HeroSection from "@/components/HeroSection";
+import SaveTheDate from "@/components/SaveTheDate";
+import Countdown from "@/components/Countdown";
+import WeddingEvents from "@/components/WeddingEvents";
+import Gallery from "@/components/Gallery";
+import BackgroundMusic from "@/components/BackgroundMusic";
+import RSVPSection from "@/components/RSVPSection";
+import WeddingFooter from "@/components/WeddingFooter";
+import InvitationNotFound from "./InvitationNotFound";
+
+const InvitePage = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const [curtainOpen, setCurtainOpen] = useState(false);
+  const [invitation, setInvitation] = useState<InvitationData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+
+  useEffect(() => {
+    const fetchInvitation = async () => {
+      if (!slug) {
+        setNotFound(true);
+        setLoading(false);
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("invitations")
+        .select("bride_name, groom_name, wedding_date, venue, story, image_url")
+        .eq("slug", slug)
+        .maybeSingle();
+
+      if (error || !data) {
+        setNotFound(true);
+      } else {
+        setInvitation(data);
+      }
+      setLoading(false);
+    };
+
+    fetchInvitation();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-ivory flex items-center justify-center">
+        <div className="text-center">
+          <div className="royal-divider w-24 mx-auto mb-4" />
+          <p className="font-elegant text-lg text-maroon italic animate-pulse">
+            Loading your invitation...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (notFound || !invitation) {
+    return <InvitationNotFound />;
+  }
+
+  return (
+    <div className="min-h-screen bg-ivory overflow-hidden">
+      <AnimatePresence>
+        {!curtainOpen && <CurtainOverlay onOpen={() => setCurtainOpen(true)} />}
+      </AnimatePresence>
+
+      {curtainOpen && (
+        <>
+          <HeroSection
+            brideName={invitation.bride_name}
+            groomName={invitation.groom_name}
+            weddingDate={invitation.wedding_date}
+            venue={invitation.venue}
+            story={invitation.story}
+          />
+          <SaveTheDate weddingDate={invitation.wedding_date} />
+          <Countdown weddingDate={invitation.wedding_date} />
+          <WeddingEvents />
+          <Gallery />
+          <RSVPSection />
+          <WeddingFooter
+            brideName={invitation.bride_name}
+            groomName={invitation.groom_name}
+            weddingDate={invitation.wedding_date}
+          />
+          <BackgroundMusic />
+        </>
+      )}
+    </div>
+  );
+};
+
+export default InvitePage;
