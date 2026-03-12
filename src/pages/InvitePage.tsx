@@ -22,29 +22,41 @@ const InvitePage = () => {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    const fetchInvitation = async () => {
-      if (!slug) {
-        setNotFound(true);
-        setLoading(false);
-        return;
-      }
+  const fetchInvitation = async () => {
+    if (!slug) {
+      setNotFound(true);
+      setLoading(false);
+      return;
+    }
 
+    try {
       const { data, error } = await supabase
         .from("invitations")
         .select("*")
-        .eq("slug", slug)
+        .eq("slug", slug.trim())
         .single();
 
-      if (error || !data) {
+      console.log("Slug:", slug);
+      console.log("Data:", data);
+      console.log("Error:", error);
+
+      if (error) {
+        console.error(error);
         setNotFound(true);
       } else {
         setInvitation(data);
       }
-      setLoading(false);
-    };
 
-    fetchInvitation();
-  }, [slug]);
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      setNotFound(true);
+    }
+
+    setLoading(false);
+  };
+
+  fetchInvitation();
+}, [slug]);
 
   if (loading) {
     return (
