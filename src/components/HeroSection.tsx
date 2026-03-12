@@ -27,7 +27,7 @@ const HeroSection = ({
   })();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-32 pb-20 px-4 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-visible">
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -44,9 +44,9 @@ const HeroSection = ({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 py-16 space-y-6">
+      <div className="relative z-10 text-center px-6">
         <motion.p
-          className="font-elegant text-xs sm:text-sm md:text-lg tracking-[0.12em] uppercase mb-6 px-6 max-w-3xl mx-auto leading-relaxed"
+          className="font-elegant text-lg md:text-xl tracking-[0.3em] uppercase mb-6"
           style={{ color: "hsl(43, 70%, 70%)" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -60,7 +60,7 @@ const HeroSection = ({
           animate={{ opacity: 1, filter: "blur(0px)" }}
           transition={{ duration: 1.2 }}
         >
-          <h1 className="font-script text-5xl sm:text-6xl md:text-8xl gold-text-gradient leading-[1.2] px-2">
+          <h1 className="font-script text-5xl md:text-8xl gold-text-gradient leading-tight">
             {brideName}
           </h1>
         </motion.div>
@@ -82,7 +82,7 @@ const HeroSection = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 1 }}
         >
-          <h1 className="font-script text-5xl sm:text-6xl md:text-8xl gold-text-gradient leading-[1.2] px-2">
+          <h1 className="font-script text-5xl md:text-8xl gold-text-gradient leading-tight">
             {groomName}
           </h1>
         </motion.div>
