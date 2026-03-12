@@ -82,7 +82,7 @@ const InvitePage = () => {
   <VideoCurtain onFinish={() => setCurtainOpen(true)} />
 )}
 
-      {curtainOpen && (
+      
         <>
           <HeroSection
             brideName={invitation.bride_name}
@@ -91,6 +91,10 @@ const InvitePage = () => {
             venue={invitation.venue}
             story={invitation.story}
           />
+          {/* video curtain overlay */}
+            {!curtainOpen && (
+              <VideoCurtain onFinish={() => setCurtainOpen(true)} />
+            )}
           <SaveTheDate weddingDate={invitation.wedding_date} />
           <Countdown weddingDate={invitation.wedding_date} />
           <WeddingEvents />
@@ -103,7 +107,7 @@ const InvitePage = () => {
           />
           <BackgroundMusic />
         </>
-      )}
+      
     </div>
   );
 };
