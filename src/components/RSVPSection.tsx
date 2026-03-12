@@ -1,44 +1,71 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
 
 const RSVPSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const [form, setForm] = useState({ name: "", email: "", guests: "1", attending: "yes" });
-  const { slug } = useParams()
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    guests: "1",
+    attending: "yes",
+  });
+
+  const [submitted, setSubmitted] = useState(false);
+  const { slug } = useParams();
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const { error } = await supabase
-    .from("rsvps")
-    .insert([
+    const { error } = await supabase.from("rsvps").insert([
       {
         guest_name: form.name,
         guest_email: form.email,
         guest_count: Number(form.guests),
         attending: form.attending === "yes",
-        invitation_slug: slug // replace later with dynamic slug
-      }
+        invitation_slug: slug,
+      },
     ]);
 
-  if (error) {
-    toast.error("Something went wrong. Please try again.");
-    console.error(error);
-    return;
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    setSubmitted(true);
+  };
+
+  if (submitted) {
+    return (
+      <section className="min-h-screen flex items-center justify-center bg-deep-maroon text-center px-6">
+        <div>
+          <h2 className="font-display text-4xl md:text-5xl gold-text-gradient mb-6">
+            Thank You!
+          </h2>
+
+          <p className="font-elegant text-lg md:text-xl text-royal-gold mb-6">
+            Your RSVP has been received.
+          </p>
+
+          <p className="font-elegant text-lg text-royal-gold">
+            We look forward to celebrating with you!
+          </p>
+
+          <div className="mt-10">
+            <button
+              onClick={() => window.location.reload()}
+              className="px-6 py-3 border border-royal-gold text-royal-gold hover:bg-royal-gold hover:text-maroon transition"
+            >
+              Back to Invitation
+            </button>
+          </div>
+        </div>
+      </section>
+    );
   }
-
-  toast.success("Thank you! Your RSVP has been received.", {
-    description: `We look forward to celebrating with you, ${form.name}!`,
-  });
-
-  setForm({ name: "", email: "", guests: "1", attending: "yes" });
-};
-
-  
 
   return (
     <section ref={ref} className="py-24 bg-maroon relative overflow-hidden">
@@ -50,6 +77,7 @@ const RSVPSection = () => {
         >
           RSVP
         </motion.h2>
+
         <motion.p
           className="text-center font-elegant text-lg mb-12 italic"
           style={{ color: "hsl(43, 70%, 70%)" }}
@@ -67,60 +95,84 @@ const RSVPSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.4 }}
         >
-          {[
-            { label: "Your Name", type: "text", key: "name", placeholder: "Enter your full name" },
-            { label: "Email Address", type: "email", key: "email", placeholder: "your@email.com" },
-          ].map((field) => (
-            <div key={field.key}>
-              <label className="block font-display text-xs tracking-[0.2em] uppercase mb-2" style={{ color: "hsl(43, 70%, 70%)" }}>
-                {field.label}
-              </label>
-              <input
-                type={field.type}
-                required
-                value={form[field.key as keyof typeof form]}
-                onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
-                placeholder={field.placeholder}
-                className="w-full px-4 py-3 bg-deep-maroon-light/30 border border-royal-gold/40 rounded-sm font-elegant text-lg focus:border-royal-gold focus:outline-none transition-colors placeholder:text-royal-gold/30"
-                style={{ color: "hsl(36, 33%, 90%)" }}
-              />
-            </div>
-          ))}
-
+          {/* Name */}
           <div>
-            <label className="block font-display text-xs tracking-[0.2em] uppercase mb-2" style={{ color: "hsl(43, 70%, 70%)" }}>
+            <label className="block font-display text-xs tracking-[0.2em] uppercase mb-2 text-royal-gold">
+              Your Name
+            </label>
+
+            <input
+              type="text"
+              required
+              value={form.name}
+              onChange={(e) =>
+                setForm({ ...form, name: e.target.value })
+              }
+              className="w-full px-4 py-3 bg-deep-maroon-light/30 border border-royal-gold/40 rounded-sm"
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block font-display text-xs tracking-[0.2em] uppercase mb-2 text-royal-gold">
+              Email Address
+            </label>
+
+            <input
+              type="email"
+              required
+              value={form.email}
+              onChange={(e) =>
+                setForm({ ...form, email: e.target.value })
+              }
+              className="w-full px-4 py-3 bg-deep-maroon-light/30 border border-royal-gold/40 rounded-sm"
+            />
+          </div>
+
+          {/* Guests */}
+          <div>
+            <label className="block font-display text-xs tracking-[0.2em] uppercase mb-2 text-royal-gold">
               Number of Guests
             </label>
+
             <select
               value={form.guests}
-              onChange={(e) => setForm({ ...form, guests: e.target.value })}
-              className="w-full px-4 py-3 bg-deep-maroon-light/30 border border-royal-gold/40 rounded-sm font-elegant text-lg focus:border-royal-gold focus:outline-none transition-colors"
-              style={{ color: "hsl(36, 33%, 90%)" }}
+              onChange={(e) =>
+                setForm({ ...form, guests: e.target.value })
+              }
+              className="w-full px-4 py-3 bg-deep-maroon-light/30 border border-royal-gold/40 rounded-sm"
             >
               {[1, 2, 3, 4, 5].map((n) => (
-                <option key={n} value={n} className="bg-deep-maroon">{n}</option>
+                <option key={n} value={n}>
+                  {n}
+                </option>
               ))}
             </select>
           </div>
 
+          {/* Attending */}
           <div>
-            <label className="block font-display text-xs tracking-[0.2em] uppercase mb-2" style={{ color: "hsl(43, 70%, 70%)" }}>
+            <label className="block font-display text-xs tracking-[0.2em] uppercase mb-2 text-royal-gold">
               Will you attend?
             </label>
+
             <div className="flex gap-4">
               {["yes", "no"].map((opt) => (
                 <button
                   key={opt}
                   type="button"
-                  onClick={() => setForm({ ...form, attending: opt })}
-                  className={`flex-1 py-3 rounded-sm font-display text-sm tracking-[0.15em] uppercase border transition-all duration-300 ${
+                  onClick={() =>
+                    setForm({ ...form, attending: opt })
+                  }
+                  className={`flex-1 py-3 border rounded-sm ${
                     form.attending === opt
-                      ? "gradient-gold border-transparent"
-                      : "border-royal-gold/40 hover:border-royal-gold"
+                      ? "gradient-gold"
+                      : "border-royal-gold/40"
                   }`}
-                  style={{ color: form.attending === opt ? "hsl(345, 80%, 10%)" : "hsl(43, 70%, 70%)" }}
                 >
-                  {opt === "yes" ? "Joyfully Accept" : "Regretfully Decline"}
+                  {opt === "yes"
+                    ? "Joyfully Accept"
+                    : "Regretfully Decline"}
                 </button>
               ))}
             </div>
@@ -128,10 +180,7 @@ const RSVPSection = () => {
 
           <motion.button
             type="submit"
-            className="w-full py-4 font-display text-sm tracking-[0.2em] uppercase gold-shine rounded-sm border-2 border-royal-gold-light cursor-pointer"
-            style={{ color: "hsl(345, 80%, 10%)" }}
-            whileHover={{ scale: 1.02, boxShadow: "0 0 30px hsla(43, 65%, 52%, 0.4)" }}
-            whileTap={{ scale: 0.98 }}
+            className="w-full py-4 border-2 border-royal-gold-light"
           >
             Send RSVP
           </motion.button>
