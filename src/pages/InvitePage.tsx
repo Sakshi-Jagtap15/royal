@@ -87,9 +87,7 @@ const InvitePage = () => {
       story={invitation.story}
     />
 
-    {!curtainOpen && (
-      <VideoCurtain onFinish={() => setCurtainOpen(true)} />
-    )}
+    
 
     {curtainOpen && (
       <>
