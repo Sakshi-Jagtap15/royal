@@ -33,7 +33,7 @@ export default function VideoCurtain({ onFinish }: Props) {
         className="w-full h-full object-cover"
         style={{ mixBlendMode: "screen" }}
       >
-        <source src="/curtain-green.mp4" type="video/mp4" />
+        <source src="/curtains.mp4" type="video/mp4" />
       </video>
     </div>
   );
