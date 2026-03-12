@@ -13,6 +13,7 @@ import BackgroundMusic from "@/components/BackgroundMusic";
 import RSVPSection from "@/components/RSVPSection";
 import WeddingFooter from "@/components/WeddingFooter";
 import InvitationNotFound from "./InvitationNotFound";
+import VideoCurtain from "@/components/VideoCurtain";
 
 const InvitePage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -77,9 +78,9 @@ const InvitePage = () => {
 
   return (
     <div className="min-h-screen bg-ivory overflow-hidden">
-      <AnimatePresence>
-        {!curtainOpen && <CurtainOverlay onOpen={() => setCurtainOpen(true)} />}
-      </AnimatePresence>
+      {!curtainOpen && (
+  <VideoCurtain onFinish={() => setCurtainOpen(true)} />
+)}
 
       {curtainOpen && (
         <>
