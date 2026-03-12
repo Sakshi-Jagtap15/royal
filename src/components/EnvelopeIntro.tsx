@@ -6,32 +6,35 @@ interface Props {
 
 const EnvelopeIntro = ({ onOpen }: Props) => {
   return (
-    <div className="fixed inset-0 bg-ivory flex items-center justify-center z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-ivory z-50">
 
-      <motion.div
-        initial={{ scale: 0.9 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 0.8 }}
-        className="text-center"
-      >
-        
+      <div className="text-center">
 
-        <div className="w-[280px] mx-auto mb-6">
-          <img
-            src="/envelope.png"
-            alt="Invitation"
-            className="w-full"
-          />
-        </div>
+        {/* Envelope */}
+        <motion.div
+          initial={{ scale: 0.8 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.8 }}
+          className="w-72 h-44 bg-white border border-gray-300 relative mx-auto shadow-lg"
+        >
+
+          {/* Envelope flap */}
+          <div className="absolute top-0 left-0 w-full h-1/2 bg-gray-200 clip-envelope"></div>
+
+        </motion.div>
+
+        <p className="mt-6 font-elegant text-maroon">
+          Invitation
+        </p>
 
         <button
           onClick={onOpen}
-          className="px-6 py-3 bg-deep-maroon text-royal-gold rounded-full"
+          className="mt-6 px-6 py-3 bg-maroon text-royal-gold rounded-full"
         >
           Open Invitation
         </button>
 
-      </motion.div>
+      </div>
     </div>
   )
 }
