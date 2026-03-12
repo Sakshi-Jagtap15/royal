@@ -24,11 +24,11 @@ const WeddingFooter = ({
     <footer className="py-16 bg-ivory text-center relative">
       <div className="royal-divider w-40 mx-auto mb-8" />
       
-      <h3 className="font-script text-4xl md:text-5xl gold-text-gradient mb-2">
+      <h3 className="font-display text-4xl md:text-5xl gold-text-gradient mb-2">
         {brideName}
       </h3>
       <span className="text-2xl">❤️</span>
-      <h3 className="font-script text-4xl md:text-5xl gold-text-gradient mt-2 mb-6">
+      <h3 className="font-display text-4xl md:text-5xl gold-text-gradient mt-2 mb-6">
         {groomName}
       </h3>
 
