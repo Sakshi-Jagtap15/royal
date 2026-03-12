@@ -27,7 +27,7 @@ const HeroSection = ({
   })();
 
   return (
-    <section className="relative min-h-screen flex items-start justify-center pt-28 md:pt-32 pb-20">
+    <section className="relative min-h-screen flex items-center justify-center py-24 md:py-32">
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -44,9 +44,9 @@ const HeroSection = ({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        <motion.p
-          className="font-elegant text-lg md:text-xl tracking-[0.3em] uppercase mb-6"
+      <div className="relative z-10 text-center px-6 py-16 max-w-4xl mx-auto">
+        <motion.p 
+        className="font-elegant text-sm md:text-xl tracking-[0.25em] uppercase mb-6 max-w-3xl mx-auto"
           style={{ color: "hsl(43, 70%, 70%)" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
