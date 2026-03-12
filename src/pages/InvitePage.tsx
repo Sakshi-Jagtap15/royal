@@ -77,39 +77,38 @@ const InvitePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-ivory overflow-hidden">
-      {!curtainOpen && (
-  <VideoCurtain onFinish={() => setCurtainOpen(true)} />
-)}
+  <div className="min-h-screen bg-ivory overflow-hidden">
 
-      
-        <>
-          <HeroSection
-            brideName={invitation.bride_name}
-            groomName={invitation.groom_name}
-            weddingDate={invitation.wedding_date}
-            venue={invitation.venue}
-            story={invitation.story}
-          />
-          {/* video curtain overlay */}
-            {!curtainOpen && (
-              <VideoCurtain onFinish={() => setCurtainOpen(true)} />
-            )}
-          <SaveTheDate weddingDate={invitation.wedding_date} />
-          <Countdown weddingDate={invitation.wedding_date} />
-          <WeddingEvents />
-          <Gallery />
-          <RSVPSection />
-          <WeddingFooter
-            brideName={invitation.bride_name}
-            groomName={invitation.groom_name}
-            weddingDate={invitation.wedding_date}
-          />
-          <BackgroundMusic />
-        </>
-      
-    </div>
-  );
+    <HeroSection
+      brideName={invitation.bride_name}
+      groomName={invitation.groom_name}
+      weddingDate={invitation.wedding_date}
+      venue={invitation.venue}
+      story={invitation.story}
+    />
+
+    {!curtainOpen && (
+      <VideoCurtain onFinish={() => setCurtainOpen(true)} />
+    )}
+
+    {curtainOpen && (
+      <>
+        <SaveTheDate weddingDate={invitation.wedding_date} />
+        <Countdown weddingDate={invitation.wedding_date} />
+        <WeddingEvents />
+        <Gallery />
+        <RSVPSection />
+        <WeddingFooter
+          brideName={invitation.bride_name}
+          groomName={invitation.groom_name}
+          weddingDate={invitation.wedding_date}
+        />
+        <BackgroundMusic />
+      </>
+    )}
+
+  </div>
+);
 };
 
 export default InvitePage;

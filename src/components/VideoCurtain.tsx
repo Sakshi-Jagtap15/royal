@@ -13,7 +13,7 @@ export default function VideoCurtain({ onFinish }: Props) {
     if (!video) return;
 
     const handleEnd = () => {
-      onFinish(); // reveal site after animation
+      onFinish();
     };
 
     video.addEventListener("ended", handleEnd);
@@ -24,15 +24,16 @@ export default function VideoCurtain({ onFinish }: Props) {
   }, [onFinish]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black">
+    <div className="fixed inset-0 z-50 pointer-events-none">
       <video
         ref={videoRef}
         autoPlay
         muted
         playsInline
         className="w-full h-full object-cover"
+        style={{ mixBlendMode: "screen" }}
       >
-        <source src="/curtains.mp4" type="video/mp4" />
+        <source src="/curtain-green.mp4" type="video/mp4" />
       </video>
     </div>
   );
