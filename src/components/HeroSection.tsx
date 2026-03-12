@@ -27,12 +27,7 @@ const HeroSection = ({
   })();
 
   return (
-    <motion.section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      initial={{ opacity: 0.6, filter: "blur(6px)", scale: 1.05 }}
-      animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
-      transition={{ duration: 1.5 }}
-    >
+    <section className="relative min-h-screen flex items-center justify-center overflow-visible">
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
@@ -49,7 +44,7 @@ const HeroSection = ({
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6">
+      <div className="relative z-10 text-center px-6 py-16 space-y-6">
         <motion.p
           className="font-elegant text-lg md:text-xl tracking-[0.3em] uppercase mb-6"
           style={{ color: "hsl(43, 70%, 70%)" }}
@@ -124,8 +119,8 @@ const HeroSection = ({
           at {venue}
         </motion.p>
       </div>
-    </motion.section>
+    </section>
   );
-};  
+};
 
 export default HeroSection;
