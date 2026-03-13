@@ -111,7 +111,7 @@ const InvitePage = () => {
     )}
 
   </div>
-);
+)
 };
 
 export default InvitePage;
