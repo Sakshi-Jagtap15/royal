@@ -44,7 +44,7 @@ const EnvelopeIntro = ({ onOpen }: Props) => {
         }
 
         transition={{
-          duration: 1.4,
+          duration: 2,
           ease: "easeInOut"
         }}
       />
