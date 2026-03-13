@@ -71,7 +71,7 @@ const EnvelopeIntro = ({ onOpen }: Props) => {
       </div>
 
       {!opened && (
-        <p className="absolute bottom-24 text-white text-xl tracking-widest">
+        <p className="absolute bottom-24 text-black text-xl tracking-widest">
           Tap to open invitation
         </p>
       )}
