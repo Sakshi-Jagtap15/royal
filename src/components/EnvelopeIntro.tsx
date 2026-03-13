@@ -69,13 +69,7 @@ const EnvelopeIntro = ({ onOpen }: Props) => {
           animate={opened ? { scale: 0, opacity: 0 } : {}}
           transition={{ duration: 0.4 }}
         >
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-red-700 to-red-900 shadow-2xl flex items-center justify-center border-2 border-red-800">
-
-            <span className="text-white text-2xl font-display tracking-widest">
-              A & P
-            </span>
-
-          </div>
+          
         </motion.div>
 
       </div>
