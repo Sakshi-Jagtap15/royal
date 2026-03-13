@@ -195,6 +195,10 @@
   transform-style: preserve-3d;
 }
 
+.perspective{
+  perspective: 2000px;
+}
+
 @keyframes shine {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
