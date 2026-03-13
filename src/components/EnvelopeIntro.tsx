@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useState, useRef } from "react"
 
 interface Props {
   onOpen: () => void
@@ -8,9 +8,16 @@ interface Props {
 const EnvelopeIntro = ({ onOpen }: Props) => {
 
   const [opened, setOpened] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
 
   const handleOpen = () => {
+
     setOpened(true)
+
+    // play music
+    if (audioRef.current) {
+      audioRef.current.play().catch(() => {})
+    }
 
     setTimeout(() => {
       onOpen()
@@ -20,37 +27,61 @@ const EnvelopeIntro = ({ onOpen }: Props) => {
   return (
     <div className="fixed inset-0 bg-black flex items-center justify-center z-50 overflow-hidden">
 
-      <motion.img
-        src="/envelope.png"
-        alt="Invitation"
-        className="cursor-pointer w-[90vw] max-w-[900px]"
-        onClick={handleOpen}
+      {/* Audio */}
+      <audio ref={audioRef} loop>
+        <source src="/music/wedding.mp3" type="audio/mpeg" />
+      </audio>
 
-        
+      {/* Envelope Container */}
+      <div className="relative">
 
-        initial={{
-          scale: 1,
-          rotateX: 0
-        }}
+        {/* Envelope */}
+        <motion.img
+          src="/envelope.png"
+          alt="Invitation"
+          className="cursor-pointer w-[90vw] max-w-[900px]"
+          onClick={handleOpen}
 
-        animate={
-          opened
-            ? {
-                scale: 3,
-                y: -200,
-                opacity: 0
-              }
-            : {}
-        }
+          initial={{
+            scale: 1,
+            rotateX: 0
+          }}
 
-        transition={{
-          duration: 2,
-          ease: "easeInOut"
-        }}
-      />
+          animate={
+            opened
+              ? {
+                  scale: 3,
+                  y: -200,
+                  opacity: 0
+                }
+              : {}
+          }
+
+          transition={{
+            duration: 2,
+            ease: "easeInOut"
+          }}
+        />
+
+        {/* Wax Seal */}
+        <motion.div
+          className="absolute left-1/2 top-[60%] -translate-x-1/2 -translate-y-1/2 z-20"
+          animate={opened ? { scale: 0, opacity: 0 } : {}}
+          transition={{ duration: 0.4 }}
+        >
+          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-red-700 to-red-900 shadow-2xl flex items-center justify-center border-2 border-red-800">
+
+            <span className="text-white text-2xl font-display tracking-widest">
+              A & P
+            </span>
+
+          </div>
+        </motion.div>
+
+      </div>
 
       {!opened && (
-        <p className="absolute bottom-24 text-black text-xl tracking-widest">
+        <p className="absolute bottom-24 text-white text-xl tracking-widest">
           Tap to open invitation
         </p>
       )}
