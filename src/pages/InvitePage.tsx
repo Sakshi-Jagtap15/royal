@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import type { InvitationData } from "@/types/invitation";
@@ -14,12 +14,14 @@ import InvitationNotFound from "./InvitationNotFound";
 import EnvelopeIntro from "@/components/EnvelopeIntro";
 
 
+
 const InvitePage = () => {
   const { slug } = useParams<{ slug: string }>();
   const [invitation, setInvitation] = useState<InvitationData | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [opened, setOpened] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
  
 
   useEffect(() => {
@@ -80,8 +82,17 @@ const InvitePage = () => {
   return (
   <div className="min-h-screen bg-ivory overflow-hidden">
 
+    <audio ref={audioRef} loop>
+      <source src="/music/wedding.mp3" type="audio/mpeg" />
+    </audio>
+
     {!opened && (
-      <EnvelopeIntro onOpen={() => setOpened(true)} />
+      <EnvelopeIntro
+  onOpen={() => {
+    setOpened(true)
+    audioRef.current?.play()
+  }}
+/>
     )}
 
     {opened && (

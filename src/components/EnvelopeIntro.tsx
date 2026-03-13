@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { useState, useRef } from "react"
+import { useState } from "react"
 
 interface Props {
   onOpen: () => void
@@ -8,16 +8,14 @@ interface Props {
 const EnvelopeIntro = ({ onOpen }: Props) => {
 
   const [opened, setOpened] = useState(false)
-  const audioRef = useRef<HTMLAudioElement>(null)
+  
 
   const handleOpen = () => {
 
     setOpened(true)
 
     // play music
-    if (audioRef.current) {
-      audioRef.current.play().catch(() => {})
-    }
+    
 
     setTimeout(() => {
       onOpen()
@@ -28,9 +26,7 @@ const EnvelopeIntro = ({ onOpen }: Props) => {
     <div className="fixed inset-0 bg-black flex items-center justify-center z-50 overflow-hidden">
 
       {/* Audio */}
-      <audio ref={audioRef} loop>
-        <source src="/music/wedding.mp3" type="audio/mpeg" />
-      </audio>
+      
 
       {/* Envelope Container */}
       <div className="relative">
