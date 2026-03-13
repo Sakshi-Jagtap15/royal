@@ -14,29 +14,35 @@ const EnvelopeIntro = ({ onOpen }: Props) => {
 
     setTimeout(() => {
       onOpen()
-    }, 1200)
+    }, 1500)
   }
 
   return (
-    <div className="fixed inset-0 bg-black flex items-center justify-center z-50 perspective">
+    <div className="fixed inset-0 bg-black flex items-center justify-center z-50 overflow-hidden">
 
       <motion.img
         src="/envelope.png"
         alt="Invitation"
-        onClick={handleOpen}
         className="cursor-pointer w-[90vw] max-w-[900px]"
-        initial={{ rotateX: 0 }}
+        onClick={handleOpen}
+
+        initial={{
+          scale: 1,
+          rotateX: 0
+        }}
+
         animate={
           opened
             ? {
-                rotateX: -120,
-                y: -300,
+                scale: 3,
+                y: -200,
                 opacity: 0
               }
             : {}
         }
+
         transition={{
-          duration: 1.2,
+          duration: 1.4,
           ease: "easeInOut"
         }}
       />
