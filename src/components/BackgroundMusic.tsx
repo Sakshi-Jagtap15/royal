@@ -37,7 +37,7 @@ const BackgroundMusic = () => {
   return (
     <>
       <audio ref={audioRef} loop>
-        <source src="/music/Aaj-Se-Teri.mp3" type="audio/mpeg" />
+        <source src="/music/Aaj Se Teri.mp3" type="audio/mpeg" />
       </audio>
 
       <button
