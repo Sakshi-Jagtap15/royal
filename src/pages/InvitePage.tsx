@@ -21,7 +21,7 @@ const InvitePage = () => {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [opened, setOpened] = useState(false)
-  
+  const [playMusic, setPlayMusic] = useState(false)
  
 
   useEffect(() => {
@@ -87,8 +87,9 @@ const InvitePage = () => {
     {!opened && (
      <EnvelopeIntro
   onOpen={() => {
-    setOpened(true)
-  }}
+  setOpened(true)
+  setPlayMusic(true)
+}}
 />
     )}
 
@@ -114,7 +115,7 @@ const InvitePage = () => {
           weddingDate={invitation.wedding_date}
         />
 
-        <BackgroundMusic />
+        <BackgroundMusic playTrigger={playMusic} />
       </>
     )}
 
