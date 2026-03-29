@@ -1,26 +1,29 @@
 import { useRef, useState, useEffect } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 
-const BackgroundMusic = () => {
+
+interface Props {
+  playTrigger?: boolean;
+}
+const BackgroundMusic = ({ playTrigger }: Props) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
 
+  useEffect(() => {
+  if (playTrigger && audioRef.current) {
+    audioRef.current.play().catch(() => {});
+    setPlaying(true);
+  }
+}, [playTrigger]);
+
   // autoplay after first user interaction
   useEffect(() => {
-    const startMusic = () => {
-      if (audioRef.current && audioRef.current.paused) {
-        audioRef.current.play().catch(() => {});
-        setPlaying(true);
-      }
-      document.removeEventListener("click", startMusic);
-    };
+  if (audioRef.current) {
+    audioRef.current.volume = 1
+  }
+}, []);
 
-    document.addEventListener("click", startMusic);
 
-    return () => {
-      document.removeEventListener("click", startMusic);
-    };
-  }, []);
 
   const toggleMusic = () => {
     if (!audioRef.current) return;

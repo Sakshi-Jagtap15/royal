@@ -21,7 +21,7 @@ const InvitePage = () => {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [opened, setOpened] = useState(false)
-  const audioRef = useRef<HTMLAudioElement>(null)
+  
  
 
   useEffect(() => {
@@ -82,15 +82,12 @@ const InvitePage = () => {
   return (
   <div className="min-h-screen bg-ivory overflow-hidden">
 
-    <audio ref={audioRef} loop>
-      <source src="/music/wedding.mp3" type="audio/mpeg" />
-    </audio>
+    
 
     {!opened && (
-      <EnvelopeIntro
+     <EnvelopeIntro
   onOpen={() => {
     setOpened(true)
-    audioRef.current?.play()
   }}
 />
     )}
